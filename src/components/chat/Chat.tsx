@@ -7,11 +7,15 @@ import React from 'react'
 import './Chat.scss';
 import ChatHeader from './ChatHeader';
 import ChatMessage from './ChatMessage';
+import { useAppSelector } from '../../app/hooks';
 
 const Chat = () => {
+  const channelName = useAppSelector((state) => state.channel.channelName);
+  console.log(channelName);
+
   return (
     <div className="chat">
-      <ChatHeader />
+      <ChatHeader channelName={channelName} />
       <div className="chatMessage">
         <ChatMessage />
         <ChatMessage />
