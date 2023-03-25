@@ -1,18 +1,24 @@
 import { Avatar } from '@mui/material';
 import React from 'react'
 import './ChatMessage.scss';
+import { Message } from "./Chat";
 
-const ChatMessage = () => {
+type Props = {
+  message: Message
+}
+const ChatMessage = (props: Props) => {
+  const { message } = props;
   return (
     <div className="message">
-      <Avatar />
+      <Avatar src={message.user?.photo} />
       <div className="messageInfo">
         <h4>
-          Yuyasat
-          <span className="messageTimestamp">2022/12/18</span>
-          <p>メッセージ本文</p>
+          {message.user?.displayName}
+          <span className="messageTimestamp">
+            {new Date(message.timestamp.toDate()).toLocaleString()}
+          </span>
+          <p>{message.message}</p>
         </h4>
-
       </div>
     </div>
   )
