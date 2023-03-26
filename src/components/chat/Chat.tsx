@@ -15,10 +15,13 @@ import {
   DocumentData,
   DocumentReference,
   onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
   Timestamp
 } from 'firebase/firestore';
 import { db } from '../../firebase';
+import useSubCollection from '../../hooks/useSubCollection';
 
 export interface Message {
   timestamp: Timestamp;
@@ -33,26 +36,10 @@ export interface Message {
 
 const Chat = () => {
   const [inputText, setInputText] = useState<string>("")
-  const [messages, setMessages] = useState<any[]>([])
-  const channelName = useAppSelector((state) => state.channel.channelName);
   const channelId = useAppSelector((state) => state.channel.channelId);
+  const channelName = useAppSelector((state) => state.channel.channelName);
   const user = useAppSelector((state) => state.user.user);
-
-  useEffect(() => {
-    let collectionRef = collection(db, "channels", String(channelId), "messages");
-    onSnapshot(collectionRef, (snapshot) => {
-      let results: Message[] = [];
-      snapshot.docs.forEach((doc) => {
-        results.push({
-          timestamp: doc.data().timestamp,
-          message: doc.data().message,
-          user: doc.data().user,
-        });
-      })
-      setMessages(results);
-      console.log(messages);
-    })
-  }, [channelId]);
+  const { subDocuments: messages } = useSubCollection("channels", "messages");
 
   const sendMessage = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -68,7 +55,7 @@ const Chat = () => {
       timestamp: serverTimestamp(),
       user: user
     })
-    console.log(docRef);
+    setInputText("")
   }
 
   return (
@@ -85,6 +72,7 @@ const Chat = () => {
           <input
             type="text"
             placeholder="#Udemyへメッセージを送信"
+            value={inputText}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)}
           />
           <button type="submit"
