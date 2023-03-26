@@ -17,6 +17,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-redux": "^7.1.25",
     "firebase": "^9.17.2",
+    "firebase-tools": "^11.25.1",
     "node-sass": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
