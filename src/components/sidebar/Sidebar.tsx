@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import './Sidebar.scss';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AddIcon from '@mui/icons-material/Add';
-import SidebarChannel from './SidebarChannel';
-import MicIcon from '@mui/icons-material/Mic';
-import HeadphonesIcon from '@mui/icons-material/Headphones';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { auth, db } from '../../firebase';
-import { useAppSelector } from '../../app/hooks';
-import { collection, query, onSnapshot, DocumentData, addDoc } from "firebase/firestore";
-import useCollection from '../../hooks/useCollection';
+import "./Sidebar.scss";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AddIcon from "@mui/icons-material/Add";
+import SidebarChannel from "./SidebarChannel";
+import MicIcon from "@mui/icons-material/Mic";
+import HeadphonesIcon from "@mui/icons-material/Headphones";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { auth, db } from "../../firebase";
+import { useAppSelector } from "../../app/hooks";
+import { collection, addDoc } from "firebase/firestore";
+import useCollection from "../../hooks/useCollection";
 
 const Sidebar = () => {
   const user = useAppSelector((state) => state.user.user);
@@ -21,10 +20,10 @@ const Sidebar = () => {
         channelName: channelName,
       });
     }
-  }
+  };
 
   return (
-    <div className='sidebar'>
+    <div className="sidebar">
       <div className="sidebarLeft">
         <div className="serverIcon">
           <img src="./discordIcon.png" alt="" />
@@ -48,8 +47,12 @@ const Sidebar = () => {
           </div>
 
           <div className="sidebarChannelList">
-            {channels.map(channel => (
-              <SidebarChannel channel={channel} id={channel.id} key={channel.id} />
+            {channels.map((channel) => (
+              <SidebarChannel
+                channel={channel}
+                id={channel.id}
+                key={channel.id}
+              />
             ))}
             {/*
             <SidebarChannel />
@@ -74,7 +77,7 @@ const Sidebar = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
